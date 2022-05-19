@@ -7,7 +7,7 @@ tableau_auth = authorize.tableau_auth
 server = authorize.server
 
 # create inner func class
-class write_func:
+class edit_func:
     def group_AllStaff(self):
             with server.auth.sign_in(tableau_auth):
                 all_groups, pagination_item = server.groups.get()

@@ -1,7 +1,0 @@
-def ts_groups():
-    with server.auth.sign_in(tableau_auth):
-        all_groups, pagination_item = server.groups.get()
-        for group in all_groups :
-            print(group.name)
-        for user in all_groups.users :
-            print(user.name)

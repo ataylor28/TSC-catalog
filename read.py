@@ -47,3 +47,6 @@ class read_func:
             print("\nThere are {} projects on site: ".format(pagination_item.total_available))
             list = [project.name for project in all_projects]
             print(*list, sep = '\n')
+    
+    def list_functions(self): 
+        [method for method in dir(read_func) if method.startswith('_') is False]

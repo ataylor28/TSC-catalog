@@ -1,6 +1,0 @@
-def ts_workbooks():
-    with server.auth.sign_in(tableau_auth):
-        all_workbooks, pagination_item = server.workbooks.get()
-        print("\nThere are {} workbooks on site: ".format(pagination_item.total_available))
-        list = [workbook.name for workbook in all_workbooks]
-        print(*list, sep = '\n')

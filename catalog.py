@@ -21,4 +21,4 @@ def list_functions(x):
 
 # call functions using class.func()
 # ex: read.datasource()
-read.datasource()
+read.groups()

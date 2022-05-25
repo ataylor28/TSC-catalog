@@ -1,6 +1,7 @@
 import tableauserverclient as TSC
 import os
 import requests
+import pandas as pd
 from authorize import authorize
 
 tableau_auth = authorize.tableau_auth
@@ -48,5 +49,65 @@ class read_func:
             list = [project.name for project in all_projects]
             print(*list, sep = '\n')
     
-    def list_functions(self): 
-        [method for method in dir(read_func) if method.startswith('_') is False]
+    # create read users_by_group function
+    def users_by_group(self):
+            with server.auth.sign_in(tableau_auth):
+                all_groups, pagination_item = server.groups.get()
+                dict_G = {}
+                dict_UG = {}
+                g = 0
+                for group in all_groups :
+                    dict_G[group.name] = [g]
+                    g+=1
+                    pagination_item = server.groups.populate_users(group)
+                    dict_UG[group.name]= [user.name for user in group.users]
+                print("\n".join("{}\n{}\n".format(k, v) for k, v in dict_UG.items()))
+    
+    # create read_users function:
+    def users_and_permissions(self):
+        with server.auth.sign_in(tableau_auth):
+            all_users, pagination_item = server.users.get()
+            list_UP = [[user.name, user.site_role] for user in all_users]
+            print("\n".join("{}, {}".format(k, v) for k, v in list_UP[:]))
+            
+            
+    
+    # create read workbooks by project function
+    def workbooks_by_project(self):
+            with server.auth.sign_in(tableau_auth):
+                all_projects, pagination_item = server.projects.get()
+                pagination_item = server.projects.populate_permissions(all_projects)
+                list = [project for project in all_projects]
+                print(*list, sep = '\n')
+# create read_projects function
+    def project_permissions(self):
+        with server.auth.sign_in(tableau_auth):
+            all_projects, pagination_item = server.projects.get()
+            dict_G = {}
+            dict_UG = {}
+            g = 0
+            for project in all_projects :
+                dict_G[project.name] = [g]
+                g+=1
+                print(project.name)
+                pagination_item = server.projects.populate_permissions(project)
+                #dict_UG[project.name]= [permission for permission in project.permissions]
+                permissions = project.permissions
+                i = -1
+                for rule in permissions:
+                    i +=1
+                    group_user_type = permissions[i].grantee.tag_name
+                    group_user_id = permissions[i].grantee.id
+                    group_user_capabilities = permissions[i].capabilities
+                    if group_user_type == 'user':
+                        user_item = server.users.get_by_id(permissions[i].grantee.id)
+                        group_user_name = user_item.name
+                    elif group_user_type == 'group':
+                        for group_item in TSC.Pager(server.groups):
+                            if group_item.id == group_user_id:
+                                group_user_name = group_item.name
+                                break
+                    print('Type: %s\tName: %s\tCapabilities: %s' %(group_user_type, group_user_name, group_user_capabilities))
+
+
+

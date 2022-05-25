@@ -16,9 +16,11 @@ def list_functions(x):
     print(*x_list, sep = '\n')
 
 # print list of available functions
-# list_functions(edit)
-# list_functions(read)
+list_functions(edit)
+list_functions(read)
 
 # call functions using class.func()
 # ex: read.datasource()
-read.groups()
+
+print('\n')
+read.project_permissions

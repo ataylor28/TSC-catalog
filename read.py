@@ -23,7 +23,11 @@ class read_func:
     def groups(self):
         with server.auth.sign_in(tableau_auth):
             all_groups, pagination_item = server.groups.get()
+            lst = []
+            list1 = [group.name for group in all_groups]
+            return list1
             for group in all_groups :
+                lst = lst.append(group.name)
                 print(group.name)
     
     # create read_users function:

@@ -23,4 +23,4 @@ list_functions(read)
 # ex: read.datasource()
 
 print('\n')
-read.hier()
+read.groups()

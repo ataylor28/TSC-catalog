@@ -1,10 +1,19 @@
 # flowchart
 from audioop import add
+from turtle import end_fill
 from read import read_func
+from edit import edit_func
 from flow_def import flow_func
+from authorize import authorize
+
+tableau_auth = authorize.tableau_auth
+server = authorize.server
 
 read = read_func()
+edit = edit_func()
 flow = flow_func()
+
+edit.group_Insights()
 
 def yes_or_no(question):
     while "Invalid answer! Please response with y/n":
@@ -41,13 +50,16 @@ def user_provision():
         add_to_groups = flow._domain()
     return add_to_groups
 
-dict = {get_email(): user_provision()}
+#dict = {get_email(): user_provision()}
 
-print(dict)
+#print(dict)
 
+em = get_email()
+
+gg = user_provision()
+print(gg)
     
-
-
-
-
+cont = yes_or_no("Are you ready to add \"" + str(em) + "\" to "+str(gg)+"? ")
+#if cont == True:
+    #edit.group_flow()
 

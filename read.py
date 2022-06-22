@@ -35,8 +35,9 @@ class read_func:
         with server.auth.sign_in(tableau_auth):
             all_users, pagination_item = server.users.get()
             print("\nThere are {} users on site: ".format(pagination_item.total_available))
+            list2 = [user.id for user in all_users]
             list = [user.name for user in all_users]
-            print(*list, sep = '\n')
+            print(*list2, sep = '\n')
     
     #create read_workbooks function
     def workbooks(self):

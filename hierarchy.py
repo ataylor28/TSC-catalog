@@ -4,8 +4,7 @@ import pandas as pd
 from pathlib import Path
 import os
 from authorize import authorize
-
-
+ 
 def getProjects():
     # Get all projects
     all_projects = list(TSC.Pager(server.projects))
@@ -35,6 +34,10 @@ def getProjectHierarchy(project_df):
     project_df['PathDSC'] = project_df.ProjectID.apply(getHierarchy)
     project_df['PathLevelNBR'] = project_df.apply(lambda row: len(row.PathDSC), axis=1)
     project_df.sort_values(by='PathLevelNBR', ignore_index=True, inplace=True)
+    #with pd.option_context('display.max_rows', len(project_df), 'display.max_columns', len(project_df.columns)):
+    pd.set_option('display.max_rows', len(project_df))
+    pd.set_option('display.max_columns', len(project_df.columns))
+    print(project_df)
     return project_df
 
 if __name__ == '__main__':
@@ -52,5 +55,3 @@ if __name__ == '__main__':
         filename = filepath / 'ProjectHierarchy.csv'
         hierarchy_df.to_csv(filename, index=False)
         #print(project_df.to_string())
-
-main

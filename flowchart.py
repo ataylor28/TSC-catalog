@@ -17,10 +17,6 @@ server = authorize.server
 read = read_func()
 edit = edit_func()
 flow = flow_func()
-# Automate flow
-edit.group_Agency()
-edit.group_AllStaff()
-edit.group_Insights()
 
 
 def yes_or_no(question):
@@ -78,9 +74,6 @@ elif method == 2:
                 print("\""+str(e) + "\" is already a member of "+str(i))
                 g.clear()
             
-        
-
-
 # Automate flow
 edit.group_Agency()
 edit.group_AllStaff()

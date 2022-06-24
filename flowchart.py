@@ -17,6 +17,11 @@ server = authorize.server
 read = read_func()
 edit = edit_func()
 flow = flow_func()
+# Automate flow
+edit.group_Agency()
+edit.group_AllStaff()
+edit.group_Insights()
+
 
 def yes_or_no(question):
     while "Invalid answer! Please response with y/n":
@@ -68,10 +73,10 @@ elif method == 2:
         for i in g:
             try:
                 edit.group_Flow(e, g)
-                g.remove(i)
+                g.clear()
             except ServerResponseError:
                 print("\""+str(e) + "\" is already a member of "+str(i))
-                g.remove(i)
+                g.clear()
             
         
 

@@ -65,7 +65,7 @@ class edit_func:
                         x_group = all_groups[x]
                         try:
                             server.groups.add_user(x_group, i)
-                        except ServerResponseError:
+                        except:
                             print("\""+str(i) + "\" is already a member of "+str(x_group))
                         c+=1
                     print(str(c)+' users added to '+ agency)
@@ -122,7 +122,10 @@ class edit_func:
                 for i in org_Add_Market:
                     x = dict_G['LA28 Marketing'][0]
                     x_group = all_groups[x]
-                    server.groups.add_user(x_group, i)
+                    try:
+                        server.groups.add_user(x_group, i)
+                    except:
+                        print("\""+str(i) + "\" is already a member of "+str(x_group))
                     c+=1
                 print(str(c)+' insights users added to LA28 Marketing')
             else:
@@ -136,7 +139,10 @@ class edit_func:
                 for i in org_Add_TUSA:
                     x = dict_G['Team USA All Staff'][0]
                     x_group = all_groups[x]
-                    server.groups.add_user(x_group, i)
+                    try:
+                        server.groups.add_user(x_group, i)
+                    except:
+                        print("\""+str(i) + "\" is already a member of "+str(x_group))
                     c+=1
                 print(str(c)+' insights users added to Team USA All Staff')
             else:
@@ -177,7 +183,10 @@ class edit_func:
                         x = dict_G[org_str][0]
                         x_group = all_groups[x]
                         #all_groups, pagination_item = server.groups.get()
-                        server.groups.add_user(x_group, i)
+                        try:
+                            server.groups.add_user(x_group, i)
+                        except:
+                            print("\""+str(i) + "\" is already a member of "+str(x_group))
                         c+=1
                     print(str(c)+' users added to '+ org_str)
                 else:

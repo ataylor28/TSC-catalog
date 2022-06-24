@@ -112,25 +112,23 @@ class flow_func():
                 if q2 == True:
                     q3 = yes_or_no("Is this user on the Insights Team?")
                     if q3 == True:
-                        choice = 'LA28 Insights'
-                    else: choice = 'LA28 Marketing'
-                    add_to_groups.append(choice)
-                    choice2 = 'LA28 & Team USA Marketing Leadership'
-                    add_to_groups.append(choice2)
+                        add_to_groups.append('LA28 Insights')
+                        add_to_groups.append('LA28 & Team USA Marketing Leadership')
+                    else:
+                        add_to_groups.append('LA28 Marketing')
+                        add_to_groups.append('LA28 & Team USA Marketing Leadership')
                 elif q2 == False: 
                     q3 = yes_or_no("Is this user on the Insights Team?")
                     if q3 == True:
-                        choice = 'LA28 Insights'
-                    else: choice = 'LA28 Marketing'
-                    add_to_groups.append(choice)
+                        add_to_groups.append('LA28 Insights')
+                    else: add_to_groups.append('LA28 Marketing')
+                    #add_to_groups.append(choice)
             elif choice == 'LA28 Commercial':
                 q1 = yes_or_no("Is this user part of Commercial Leadership?")
                 if q1 == True:
-                    choice = 'LA28 Commercial'
-                    add_to_groups.append(choice)
-                    choice2 = 'LA28 Commercial Leadership'
-                    add_to_groups.append(choice2)
-                else: choice = 'LA28 Commercial'
+                    add_to_groups.append('LA28 Commercial')
+                    add_to_groups.append('LA28 Commercial Leadership')
+                else: add_to_groups.append('LA28 Commercial')
             else: add_to_groups.append(choice)
             return add_to_groups
         
@@ -153,11 +151,9 @@ class flow_func():
             if choice == 'Team USA Digital':
                 q1 = yes_or_no("Is this user part of Digital/Marketing Leadership?")
                 if q1 == True:
-                    choice = 'Team USA Digital'
-                    add_to_groups.append(choice)
-                    choice2 = 'LA28 & Team USA Marketing Leadership'
-                    add_to_groups.append(choice2)
-                else: choice = 'Team USA Digital'
+                    add_to_groups.append('Team USA Digital')
+                    add_to_groups.append('LA28 & Team USA Marketing Leadership')
+                else: add_to_groups.append('Team USA Digital')
             else: add_to_groups.append(choice)
             return add_to_groups
 

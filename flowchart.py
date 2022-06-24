@@ -1,6 +1,11 @@
 # flowchart
 from audioop import add
+from heapq import heapify
+from mimetypes import init
+from re import T
 from turtle import end_fill
+
+from tableauserverclient import ServerResponseError
 from read import read_func
 from edit import edit_func
 from flow_def import flow_func
@@ -13,8 +18,6 @@ read = read_func()
 edit = edit_func()
 flow = flow_func()
 
-edit.group_Insights()
-
 def yes_or_no(question):
     while "Invalid answer! Please response with y/n":
         reply = str(input(question+' (y/n): ')).lower().strip()
@@ -25,41 +28,55 @@ def yes_or_no(question):
         else:
             print("Invalid answer! Please response with y/n")
 
-def get_email():
-    while "False":
-        u_email = str(input("What is the new user's email? "))
-        reply1 = yes_or_no("You wrote \""+str(u_email)+"\" is that correct?")
-        if reply1 == True: break
-        if reply1 == False: continue
-    return u_email
 
 def user_provision():
     AMP = flow._AMP()
     if AMP != None:
         if AMP[0] == True:
             z = AMP[1]
-            print(AMP[1])
-            add_to_groups = flow._domain()
-            add_to_groups.append(z)
-            return add_to_groups
+            add_to_groups2 = flow._domain()
+            add_to_groups2.append(z)
+            return add_to_groups2
         elif AMP[0] == False:
-            add_to_groups = AMP[1]
-            print(add_to_groups)
-            return add_to_groups
+            add_to_groups2 = AMP[1]
+            return [add_to_groups2]
     elif AMP == None: 
-        add_to_groups = flow._domain()
-    return add_to_groups
+        add_to_groups2 = flow._domain()
+        return add_to_groups2
+    return add_to_groups2
 
-#dict = {get_email(): user_provision()}
+method = int(input("How would you like to provision users? "+'\n'+'1. Individually by email'+'\n'+'2. By list'+'\n'))
 
-#print(dict)
+# Individually by email
+if method == 1:
+    e = flow.get_email()
+    g = user_provision()
+    #for group in g:
+    cont = yes_or_no("Are you ready to add \"" + str(e) + "\" to "+str(g)+"? ")
+    if cont == True:
+        try:
+            edit.group_Flow(e, g)
+        except ServerResponseError:
+            print("\""+str(e) + "\" is already a member of "+str(g))
+elif method == 2:
+    groupless = []
+    groupless = edit.Users_Need_Groups()
+    for e in groupless:
+        g = []
+        print ('\n\nProvisioning for ' + e)
+        g = user_provision()
+        for i in g:
+            try:
+                edit.group_Flow(e, g)
+                g.remove(i)
+            except ServerResponseError:
+                print("\""+str(e) + "\" is already a member of "+str(i))
+                g.remove(i)
+            
+        
 
-em = get_email()
 
-gg = user_provision()
-print(gg)
-    
-cont = yes_or_no("Are you ready to add \"" + str(em) + "\" to "+str(gg)+"? ")
-#if cont == True:
-    #edit.group_flow()
-
+# Automate flow
+edit.group_Agency()
+edit.group_AllStaff()
+edit.group_Insights()

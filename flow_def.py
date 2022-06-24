@@ -11,7 +11,7 @@ add_to_groups = []
 from requests import NullHandler
 
 def yes_or_no(question):
-    while "Invalid answer! Please response with y/n":
+    while "Invalid answer! Please respond with y/n":
         reply = str(input(question+' (y/n): ')).lower().strip()
         if reply[:1] =='y':
             return True
@@ -21,6 +21,15 @@ def yes_or_no(question):
             print("Invalid answer! Please response with y/n")
 
 class flow_func():
+
+    def get_email(self):
+        while "False":
+            u_email = str(input("What is the new user's email? "))
+            reply1 = yes_or_no("You wrote \""+str(u_email)+"\" is that correct?")
+            if reply1 == True: break
+            if reply1 == False: continue
+        return u_email
+
 
     def _AMP(self):
         q1 = yes_or_no("Is this an AMP User?")
@@ -39,48 +48,51 @@ class flow_func():
                     print("Invalid answer! Please response with y/n")
 
     def _domain(self):
-        while "Invalid answer! Please response with 1, 2 or 3":
-            reply = int(input("Where does this user work? "+'\n'+'1. LA28'+'\n'+'2. USOPC'+'\n'+'3. Agency'+'\n'))
-            # LA28
-            if reply == 1:
-                status_domain = 'LA28'
-                q1 = yes_or_no("Is this an user a part of C-Suite Leadership?")
-                if q1 == True:
-                    #add_to_groups.append('LA28 Leadership')
-                    q2 = yes_or_no("Want to add a department?")
-                    if q2 == True:
-                        self.LA28_domain._Department()
-                        add_to_groups.append('LA28 Leadership')
-                    elif q2 == False:
-                        add_to_groups.append('LA28 Leadership')
-                    return add_to_groups
-                if q1 == False:
+        reply = int(input("Where does this user work? "+'\n'+'1. LA28'+'\n'+'2. USOPC'+'\n'+'3. Agency'+'\n'))
+        # LA28
+        a = []
+        if reply == 1:
+            #add_to_groups = None
+            status_domain = 'LA28'
+            q1 = yes_or_no("Is this an user a part of C-Suite Leadership?")
+            if q1 == True:
+                #add_to_groups.append('LA28 Leadership')
+                q2 = yes_or_no("Want to add a department?")
+                if q2 == True:
                     self.LA28_domain._Department()
-                return add_to_groups
-            # Team USA
-            if reply == 2:
-                status_domain ='USOPC'
-                q1 = yes_or_no("Is this an user a part of C-Suite Leadership?")
-                if q1 == True:
-                    q2 = yes_or_no("Want to add a department?")
-                    if q2 == True:
-                        self.TUSA_domain._Department()
-                        add_to_groups.append('Team USA Leadership')
-                    if q2 == False:
-                        add_to_groups.append('Team USA Leadership')
-                    return add_to_groups
-                if q1 == False:
+                    a = self.add_to_groups.append('LA28 Leadership')
+                elif q2 == False:
+                    a = self.add_to_groups.append('LA28 Leadership')
+                return a
+            if q1 == False:
+                a = self.LA28_domain._Department()
+                return a
+        # Team USA
+        if reply == 2:
+            #add_to_groups = None
+            status_domain ='USOPC'
+            q1 = yes_or_no("Is this an user a part of C-Suite Leadership?")
+            if q1 == True:
+                q2 = yes_or_no("Want to add a department?")
+                if q2 == True:
                     self.TUSA_domain._Department()
+                    self.add_to_groups.append('Team USA Leadership')
+                if q2 == False:
+                    self.add_to_groups.append('Team USA Leadership')
                 return add_to_groups
-            if reply == 3:
-                status_domain = 'Agency'
-                self.Agency_domain._Department()
-                return add_to_groups
-            else:
-                print("Invalid answer! Please response with 1, 2 or 3")
+            if q1 == False:
+                self.TUSA_domain._Department()
+            return add_to_groups
+        if reply == 3:
+            #add_to_groups = None
+            status_domain = 'Agency'
+            self.Agency_domain._Department()
+            return self.add_to_groups
+        else:
+            print("Invalid answer! Please response with 1, 2 or 3")
 
     class LA28_domain():
-
+        
         def _Department():
             groups_la28 = [x for x in groups_available if 'LA28' in x]
             groups_la28[:] = (x for x in groups_la28 if 'Leadership' not in x and 'Agency' not in x and 'Staff' not in x and 'Insights' not in x)
@@ -94,7 +106,7 @@ class flow_func():
                 choice = groups_la28[reply-1]
                 reply1 = yes_or_no("You chose \""+str(choice)+"\" is that correct?")
                 if reply1 == True: break
-                if reply1 == False: continue
+                elif reply1 == False: continue
             if choice == 'LA28 Marketing':
                 q2 = yes_or_no("Is this user part of Marketing Leadership?")
                 if q2 == True:
@@ -122,7 +134,6 @@ class flow_func():
             else: add_to_groups.append(choice)
             return add_to_groups
         
-
     class TUSA_domain():
 
         def _Department():
@@ -151,9 +162,8 @@ class flow_func():
             return add_to_groups
 
     class Agency_domain():
-
+        
         def _Department():
-
             groups_Agency = [x for x in groups_available if 'Agency' in x]
             while "False":
                 reply = 0
@@ -167,4 +177,5 @@ class flow_func():
                 if reply1 == True: break
                 if reply1 == False: continue
             add_to_groups.append(choice)
+            choice = None
             return add_to_groups

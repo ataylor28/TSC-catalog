@@ -18,7 +18,6 @@ read = read_func()
 edit = edit_func()
 flow = flow_func()
 
-
 def yes_or_no(question):
     while "Invalid answer! Please response with y/n":
         reply = str(input(question+' (y/n): ')).lower().strip()

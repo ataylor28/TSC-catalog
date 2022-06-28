@@ -87,7 +87,7 @@ class flow_func():
             #add_to_groups = None
             status_domain = 'Agency'
             self.Agency_domain._Department()
-            return self.add_to_groups
+            return add_to_groups
         else:
             print("Invalid answer! Please response with 1, 2 or 3")
 
